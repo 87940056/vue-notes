@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
+    <script src="vue.js"></script>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+<div id="el"
+        @dblclick.ctrl="addNote"
+        @mousemove="blockMove"
+        @mouseup="mu">
+    <div class="header">
+        <div class="init" @click="init">初始化</div>
+    </div>
+    <div class="content">
+        <!--<div class="note" v-for="v in notes" v-bind="{style:`top:${v.top}px;left:${v.left}px`}">-->
+        <div v-for="(v,i) in notes"
+             :class="`note ${v.theme} ${blockData.index==i?'active':''}`"
+             :key="v.id"
+             :style="{top:v.top+'px',left:v.left+'px',zIndex:(blockData.index==i?1:null)}">
+            <!--<div v-for="v in notes" class="note" :class="v.theme" :style="{top:v.top+'px',left:v.left+'px'}">-->
+            <h3 class="title" @mousedown="md(i,$event)">
+                {{v.title}}
+            </h3>
+            <div class="noteContent">
+                <textarea
+                        @keyup.stop
+                        @click="textArea(i)"
+                        v-model="v.content"
+                        @blur="save">
+                </textarea>
+            </div>
+            <div class="delete" @click="blockDelete(i)"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="./index.js"></script>
