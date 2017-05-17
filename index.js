@@ -3,6 +3,7 @@ localStorage.id = localStorage.id ? localStorage.id : 1;
 var app = new Vue({
     el: '#el',
     data: {
+        noteTitle: 'my note',
         notes: [
             {
                 id: localStorage.id,
@@ -65,7 +66,7 @@ var app = new Vue({
             location.reload();
         },
         textArea: function (i) {
-            this.blockData.index=this.blockData.index==i?i:null;
+            this.blockData.index = this.blockData.index == i ? i : null;
         }
     },
     mounted: function () {
@@ -79,6 +80,28 @@ var app = new Vue({
         //bind之前this指document
         if (localStorage.notes) {
             this.notes = JSON.parse(localStorage.notes);
+        }
+    },
+    filters: {
+        title: function (value) {
+            var date = new Date();
+            return value +' '+ (date.getMonth() + 1) + "-" + date.getDate()
+        }
+    },
+    computed: {
+        //noteTitle:{
+        //    get:function(){
+        //        return this.title.split('').reverse().join('');
+        //    },
+        //    set:function(){
+        //        location.href='http://www.baidu.com';
+        //    }
+        //}
+    },
+    watch: {
+        notes: function () {
+            console.log(1);
+            this.save();
         }
     }
 });

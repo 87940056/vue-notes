@@ -13,15 +13,16 @@
         @mousemove="blockMove"
         @mouseup="mu">
     <div class="header">
+        {{noteTitle | title}}
         <div class="init" @click="init">初始化</div>
     </div>
     <div class="content">
         <!--<div class="note" v-for="v in notes" v-bind="{style:`top:${v.top}px;left:${v.left}px`}">-->
+        <!--<div v-for="v in notes" class="note" :class="v.theme" :style="{top:v.top+'px',left:v.left+'px'}">-->
         <div v-for="(v,i) in notes"
              :class="`note ${v.theme} ${blockData.index==i?'active':''}`"
              :key="v.id"
              :style="{top:v.top+'px',left:v.left+'px',zIndex:(blockData.index==i?1:null)}">
-            <!--<div v-for="v in notes" class="note" :class="v.theme" :style="{top:v.top+'px',left:v.left+'px'}">-->
             <h3 class="title" @mousedown="md(i,$event)">
                 {{v.title}}
             </h3>
@@ -35,6 +36,7 @@
             </div>
             <div class="delete" @click="blockDelete(i)"></div>
         </div>
+        <span class="span" v-if="!notes.length">清添加便签</span>
     </div>
 </div>
 </body>
